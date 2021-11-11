@@ -1,0 +1,41 @@
+{
+  "name": "miko-express-rest",
+  "version": "1.0.0",
+  "description": "A simple REST API for ExpressJS",
+  "main": "lib/index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "node ./tests/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeffmiko/miko-express-rest.git"
+  },
+  "keywords": [
+    "express",
+    "rest",
+    "miko"
+  ],
+  "author": "jeffmiko",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jeffmiko/miko-express-rest/issues"
+  },
+  "homepage": "https://github.com/jeffmiko/miko-express-rest#readme",
+  "devDependencies": {
+    "axios": "^0.24.0",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "helmet": "^4.6.0",
+    "mariadb": "^2.5.5",
+    "mysql": "^2.18.1",
+    "mysql2": "^2.3.3-rc.0"
+  },
+  "engines": {
+    "node": ">= 14.0.0"
+  }
+}
