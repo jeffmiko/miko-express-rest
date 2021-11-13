@@ -1,18 +1,18 @@
 const mariadb = require("mariadb")
 const express = require("./express")
-const dbconfig = require("./dbconfig")
 const api = require("./api")
+const dbconfig = Object.assign({  
+  allowPublicKeyRetrieval: true ,
+  collation: "utf8mb4_unicode_ci",
+}, require("./dbconfig"))
 const runtests = require("./runtests")
 
 
-async function testMariadb() {
+module.exports.testRest = async function testRest() {
 
   console.log("Starting MariaDB tests")
-  const config = Object.assign({  
-      allowPublicKeyRetrieval: true ,
-      collation: "utf8mb4_unicode_ci",
-    }, dbconfig)
-  const pool = mariadb.createPool(config);
+
+  const pool = mariadb.createPool(dbconfig);
   const httpServer = express(api, pool, "/api")
   
   await runtests()
@@ -23,6 +23,17 @@ async function testMariadb() {
 
 }
 
+module.exports.testDB = async function testDB() {
+  let name = "mariadb"
+  let mdb = require("mariadb/callback")
+  let conn = mdb.createConnection(dbconfig)
+  conn.query("SELECT database() as dbname", (err, rows) => {
+    console.log(name,"DBNAME", rows[0].dbname)
+
+    console.log("")
+    conn.end()
+  });
+
+}
 
 
-module.exports = testMariadb
