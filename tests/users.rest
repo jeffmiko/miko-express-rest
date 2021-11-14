@@ -1,5 +1,6 @@
 GET http://localhost:3000/api/users
 content-type: application/json
+db-limit: 100
 
 ###
 
@@ -8,6 +9,10 @@ content-type: application/json
 
 ###
 
+DELETE http://localhost:3000/api/users/68
+content-type: application/json
+
+###
 POST http://localhost:3000/api/users
 content-type: application/json
 
@@ -19,10 +24,14 @@ content-type: application/json
 }
 
 ###
-
-DELETE http://localhost:3000/api/users/68
+PATCH http://localhost:3000/api/users/66
 content-type: application/json
 
-###
+{
+  "givenname": "Mickey",
+  "familyname": "Mouse",
+  "updated": "2021-11-14T14:48:17Z"
+}
 
+###
 
