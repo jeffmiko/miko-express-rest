@@ -23,17 +23,3 @@ module.exports.testRest = async function testRest() {
 
 }
 
-module.exports.testDB = async function testDB() {
-  let name = "mariadb"
-  let mdb = require("mariadb/callback")
-  let conn = mdb.createConnection(dbconfig)
-  conn.query("SELECT database() as dbname", (err, rows) => {
-    console.log(name,"DBNAME", rows[0].dbname)
-
-    console.log("")
-    conn.end()
-  });
-
-}
-
-

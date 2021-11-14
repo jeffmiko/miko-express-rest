@@ -24,6 +24,9 @@
     "url": "https://github.com/jeffmiko/miko-express-rest/issues"
   },
   "homepage": "https://github.com/jeffmiko/miko-express-rest#readme",
+  "peerDependencies": {
+    "express": "^4.15.2"
+  },
   "devDependencies": {
     "axios": "^0.24.0",
     "cors": "^2.8.5",
@@ -31,7 +34,8 @@
     "express": "^4.17.1",
     "mariadb": "^2.5.5",
     "mysql": "^2.18.1",
-    "mysql2": "^2.3.3-rc.0"
+    "mysql2": "^2.3.3-rc.0",
+    "pg": "^8.7.1"
   },
   "engines": {
     "node": ">= 14.0.0"
