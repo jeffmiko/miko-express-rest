@@ -1,20 +1,45 @@
 require("dotenv").config()
-const mysql = require("./mysql")
-const mysql2 = require("./mysql2")
-const mariadb = require("./mariadb")
+const pools = require("./dbpools")
+const { dbrest } = require("../lib")
+const express = require("express")
+const cors = require("cors")
+const http = require("http")
 
 
-async function test() {
-  console.log("")
-  await mysql.testRest()
-  console.log("")
-  await mysql2.testRest()
-  console.log("")
-  await mariadb.testRest()
-  console.log("")
-}
+const app = express()
+
+
+// allow CORS
+app.use(cors()) // allow all origins
+app.options('*', cors()) // allow pre-flights
+
+// body parsers
+app.use(express.json())
+
+
+// TODO: add api here
+const pool = pools.getMariaDB()
+const api = dbrest(pool)
+api.addTable({name: 'users', pkey: 'userpk', fkeys: []})
+
+
+let apiRoutes = api.createRoutes()
+app.use("/api", apiRoutes)
 
 
 
-test()
+// everything else return 404
+app.use((req, res) => {
+  res.status(404).json({ 
+    method: req.method, 
+    url: req.originalUrl,                          
+    params: req.params,
+    query: req.query,
+    body: req.body, 
+  })
+})
 
+let port = process.env.HTTP_PORT || 3000
+let httpServer = http.createServer(app);
+httpServer.listen(port);
+console.log(`Listening on port ${port} as of`, new Date().toLocaleTimeString())

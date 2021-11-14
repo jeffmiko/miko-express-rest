@@ -7,7 +7,7 @@
     "lib": "lib"
   },
   "scripts": {
-    "test": "node ./tests/index.js"
+    "test": "nodemon ./tests/index.js"
   },
   "repository": {
     "type": "git",
@@ -24,8 +24,14 @@
     "url": "https://github.com/jeffmiko/miko-express-rest/issues"
   },
   "homepage": "https://github.com/jeffmiko/miko-express-rest#readme",
+  "dependencies": {
+    "miko-db": "github:jeffmiko/miko-db"
+  },
   "peerDependencies": {
     "express": "^4.15.2"
+  },
+  "engines": {
+    "node": ">= 14.0.0"
   },
   "devDependencies": {
     "axios": "^0.24.0",
@@ -34,10 +40,6 @@
     "express": "^4.17.1",
     "mariadb": "^2.5.5",
     "mysql": "^2.18.1",
-    "mysql2": "^2.3.3-rc.0",
-    "pg": "^8.7.1"
-  },
-  "engines": {
-    "node": ">= 14.0.0"
+    "mysql2": "^2.3.3-rc.0"
   }
 }
