@@ -1,6 +1,6 @@
 require("dotenv").config()
 const pools = require("./ko-test")
-const { dbrest, hooks } = require("../lib")
+const { dbrest, dbhook } = require("../lib")
 const express = require("express")
 const cors = require("cors")
 const http = require("http")
@@ -22,7 +22,7 @@ const pool = pools.getMySql()
 const api = dbrest(pool)
 
 api.addTables(pools.tables)
-api.addGlobalHooks({ data: [hooks.data.stripEmpty(), hooks.data.stripFields(["created","updated"])] })
+api.addGlobalHooks({ data: [dbhook.data.stripEmpty(), dbhook.data.stripFields(["created","updated"])] })
 
 for(let hook of pools.tableHooks) {
   api.addTableHooks(hook)
