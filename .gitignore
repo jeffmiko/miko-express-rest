@@ -104,3 +104,4 @@ dist
 .tern-port
 
 new/
+/tests/ko*

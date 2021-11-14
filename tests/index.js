@@ -1,5 +1,5 @@
 require("dotenv").config()
-const pools = require("./dbpools")
+const pools = require("./ko-test")
 const { dbrest, hooks } = require("../lib")
 const express = require("express")
 const cors = require("cors")
@@ -17,11 +17,16 @@ app.options('*', cors()) // allow pre-flights
 app.use(express.json())
 
 
-// TODO: add api here
-const pool = pools.getMariaDB()
+// add api here
+const pool = pools.getMySql()
 const api = dbrest(pool)
-api.addTable({name: 'users', pkey: 'userpk', fkeys: []})
-api.addGlobalHooks({ post: [hooks.stripAll(["updated", "created"])] })
+
+api.addTables(pools.tables)
+api.addGlobalHooks({ data: [hooks.data.stripEmpty(), hooks.data.stripFields(["created","updated"])] })
+
+for(let hook of pools.tableHooks) {
+  api.addTableHooks(hook)
+}
 
 let apiRoutes = api.createRoutes()
 app.use("/api", apiRoutes)
