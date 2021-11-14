@@ -1,6 +1,6 @@
 require("dotenv").config()
 const pools = require("./dbpools")
-const { dbrest } = require("../lib")
+const { dbrest, hooks } = require("../lib")
 const express = require("express")
 const cors = require("cors")
 const http = require("http")
@@ -21,7 +21,7 @@ app.use(express.json())
 const pool = pools.getMariaDB()
 const api = dbrest(pool)
 api.addTable({name: 'users', pkey: 'userpk', fkeys: []})
-
+api.addGlobalHooks({ post: [hooks.stripAll(["updated", "created"])] })
 
 let apiRoutes = api.createRoutes()
 app.use("/api", apiRoutes)
