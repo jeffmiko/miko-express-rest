@@ -4,9 +4,13 @@ const { dbrest, dbhook } = require("../lib")
 const express = require("express")
 const cors = require("cors")
 const http = require("http")
-
-
 const app = express()
+
+
+async function auth(req, res, next) {
+  console.log("TODO: check authentication header")
+  next()
+}
 
 
 // allow CORS
@@ -18,11 +22,11 @@ app.use(express.json())
 
 
 // add api here
-const pool = pools.getMySql()
+const pool = pools.getMariaDB()
 const api = dbrest(pool)
 
 api.addTables(pools.tables)
-api.addGlobalHooks({ data: [dbhook.data.stripEmpty(), dbhook.data.stripFields(["created","updated"])] })
+api.addGlobalHooks({ all: [auth], data: [dbhook.data.stripEmpty(), dbhook.data.stripFields(["created","updated"])] })
 
 for(let hook of pools.tableHooks) {
   api.addTableHooks(hook)
